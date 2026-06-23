@@ -1,0 +1,1453 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UX Portfolio - Stripe Style</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Source+Code+Pro:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.41.1/dist/tabler-icons.min.css">
+  <style>
+    :root {
+      --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+      --font-code: "Source Code Pro", "SFMono-Regular", Menlo, Monaco, monospace;
+      --background: #ffffff;
+      --bg: var(--background);
+      --surface1: #ffffff;
+      --surface2: #f8fafd;
+      --surface3: #e5edf5;
+      --border: #e5edf5;
+      --border-visible: #d4dee9;
+      --text1: #0a2540;
+      --text2: #50617a;
+      --text3: #64748d;
+      --text4: #95a4ba;
+      --accent: #533afd;
+      --accent-hover: #4032c8;
+      --accent-subtle: #e8e9ff;
+      --success: #228403;
+      --warning: #a82c00;
+      --error: #df1b41;
+      --orange: #ff6118;
+      --lemon: #ffd552;
+      --pink: #fb76fa;
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+      --space-3xl: 64px;
+      --space-4xl: 96px;
+      --radius-xs: 2px;
+      --radius-sm: 4px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+      --radius-xl: 16px;
+      --radius-pill: 99999px;
+      --shadow-card: 0 16px 32px rgba(50, 50, 93, .12);
+      --shadow-nav: 0 8px 24px -8px rgba(0, 0, 0, .08), 0 4px 12px -4px rgba(50, 50, 93, .10);
+      --ease: cubic-bezier(.215, .61, .355, 1);
+      --ease-smooth: cubic-bezier(.25, 1, .5, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text1);
+      font-family: var(--font-sans);
+      font-weight: 300;
+      letter-spacing: 0;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .site-shell {
+      min-height: 100vh;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(248, 250, 253, .92) 0%, rgba(255, 255, 255, 1) 42%),
+        var(--background);
+    }
+
+    .nav-wrap {
+      position: fixed;
+      top: 16px;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      padding: 0 24px;
+      pointer-events: none;
+    }
+
+    .nav {
+      width: min(100%, 1180px);
+      height: 64px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 8px 6px 18px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, .92);
+      box-shadow: var(--shadow-nav);
+      border: 1px solid rgba(229, 237, 245, .78);
+      pointer-events: auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      color: var(--text1);
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .mark {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      background:
+        radial-gradient(circle at 80% 20%, var(--pink), transparent 42%),
+        linear-gradient(135deg, var(--accent) 0%, var(--orange) 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .32);
+      flex: 0 0 auto;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-links a {
+      padding: 9px 12px;
+      color: var(--text2);
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: var(--radius-md);
+      transition: color 150ms var(--ease), background 150ms var(--ease);
+    }
+
+    .nav-links a:hover {
+      color: var(--text1);
+      background: var(--surface2);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 36px;
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      background: #061b31;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.6;
+      transition: background 150ms var(--ease);
+    }
+
+    .nav-cta i { transition: transform 150ms var(--ease); }
+    .nav-cta:hover { background: var(--accent-hover); }
+    .nav-cta:hover i { transform: translateX(3px); }
+
+    .hero {
+      position: relative;
+      min-height: 760px;
+      padding: 152px 24px 96px;
+      display: flex;
+      align-items: center;
+      isolation: isolate;
+    }
+
+    .stripe-stage {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: -2;
+      background:
+        radial-gradient(circle at 74% 34%, rgba(59, 130, 246, .08), transparent 34%),
+        linear-gradient(180deg, #fff 0%, #f8fafd 100%);
+    }
+
+    .stripe-stage::before {
+      content: "";
+      position: absolute;
+      top: 68px;
+      left: 50%;
+      width: min(72vw, 760px);
+      aspect-ratio: 1;
+      transform: translateX(-7%);
+      border-radius: 50%;
+      opacity: .28;
+      background:
+        repeating-radial-gradient(circle,
+          transparent 0 38px,
+          rgba(65, 59, 75, .22) 39px 40px,
+          transparent 41px 76px),
+        conic-gradient(from 0deg,
+          transparent 0deg 9deg,
+          rgba(65, 59, 75, .18) 9deg 10deg,
+          transparent 10deg 22deg);
+      mask-image: radial-gradient(circle, black 0 58%, transparent 72%);
+      pointer-events: none;
+    }
+
+    .stripe-stage::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, .98) 0 41%, rgba(255, 255, 255, .70) 56%, rgba(255, 255, 255, .12) 100%),
+        linear-gradient(180deg, transparent 72%, #fff 100%);
+      pointer-events: none;
+    }
+
+    .shape-grid-wrap {
+      position: absolute;
+      top: 50%;
+      right: -150px;
+      width: min(1080px, 84vw);
+      height: min(1080px, 84vw);
+      z-index: 0;
+      transform: translateY(-47%);
+      opacity: .78;
+      pointer-events: none;
+    }
+
+    .shape-grid-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 6.5fr) minmax(320px, 5.5fr);
+      gap: 32px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 22px;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 18px;
+      height: 18px;
+      border-radius: var(--radius-sm);
+      background:
+        linear-gradient(135deg, var(--orange), var(--pink) 54%, var(--accent));
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .32);
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      color: var(--text1);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      max-width: 780px;
+      font-size: clamp(44px, 6.4vw, 76px);
+      line-height: 1.03;
+      letter-spacing: -0.025em;
+    }
+
+    .hero-copy {
+      max-width: 620px;
+      margin: 24px 0 0;
+      color: var(--text2);
+      font-size: 18px;
+      line-height: 1.48;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 40px;
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      border: 0;
+      font: 500 14px/1.6 var(--font-sans);
+      cursor: pointer;
+      transition: background 150ms var(--ease), color 150ms var(--ease), transform 150ms var(--ease), opacity 150ms var(--ease);
+    }
+
+    .btn i { transition: transform 150ms var(--ease); }
+    .btn:hover i { transform: translateX(3px); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: var(--accent-hover); }
+
+    .btn-secondary {
+      color: var(--text1);
+      background: transparent;
+      padding-inline: 4px;
+    }
+
+    .btn-secondary:hover {
+      color: var(--accent-hover);
+    }
+
+    .hero-proof {
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .browser {
+      width: min(100%, 460px);
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.38);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      box-shadow: 0 15px 35px hsla(0, 0%, 9%, .08), 0 35px 70px rgba(50, 50, 93, .12), inset 0 1px 0 rgba(255,255,255,0.8);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      overflow: hidden;
+    }
+
+    .browser-top {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 14px;
+      background: rgba(245, 248, 252, 0.6);
+      border-bottom: 1px solid rgba(255,255,255,0.5);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #bac8da;
+    }
+
+    .browser-url {
+      margin-left: 10px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      color: var(--text3);
+      background: #fff;
+      font: 500 11px/1.45 var(--font-code);
+      min-width: 0;
+    }
+
+    .browser-body {
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.45);
+    }
+
+    .dash-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+    }
+
+    .dash-title {
+      color: var(--text1);
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: var(--radius-pill);
+      background: #ecfed7;
+      color: var(--success);
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .status::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .metric {
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: #fff;
+    }
+
+    .metric strong {
+      display: block;
+      color: var(--text1);
+      font-size: 22px;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 5px;
+      color: var(--text3);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .chart {
+      position: relative;
+      height: 142px;
+      margin-top: 16px;
+      padding: 14px 12px 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background:
+        linear-gradient(180deg, rgba(248, 250, 253, .68), #fff),
+        repeating-linear-gradient(0deg, transparent 0 27px, rgba(229, 237, 245, .7) 28px);
+      overflow: hidden;
+    }
+
+    .bars {
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      gap: 7px;
+    }
+
+    .bar {
+      flex: 1;
+      min-width: 5px;
+      border-radius: var(--radius-pill) var(--radius-pill) 2px 2px;
+      background: linear-gradient(180deg, #9a9afe, #533afd);
+      opacity: .9;
+    }
+
+    .section {
+      padding: 96px 24px;
+    }
+
+    .section.alt {
+      background: var(--surface2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .section-kicker i {
+      color: var(--orange);
+      font-size: 18px;
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 6fr) minmax(260px, 4fr);
+      gap: 32px;
+      align-items: end;
+      margin-bottom: 42px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(34px, 4.5vw, 56px);
+      line-height: 1.05;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--text2);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      position: relative;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface1);
+      transition: transform 240ms var(--ease-smooth), box-shadow 240ms var(--ease-smooth), border-color 240ms var(--ease-smooth);
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 90% 12%, rgba(83, 58, 253, .16), transparent 60%),
+        radial-gradient(ellipse 60% 45% at 72% 0%, rgba(255, 97, 24, .14), transparent 58%);
+      transition: opacity 240ms var(--ease-smooth);
+      pointer-events: none;
+    }
+
+    .project-card:hover {
+      transform: scale(1.018);
+      box-shadow: var(--shadow-card);
+      border-color: #d6d9fc;
+    }
+
+    .project-card:hover::before { opacity: 1; }
+
+
+
+    .project-content {
+      position: relative;
+      z-index: 1;
+      max-width: 540px;
+    }
+
+    .project-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 9px;
+      border: 1px solid var(--border-visible);
+      border-radius: var(--radius-pill);
+      background: var(--surface2);
+      color: var(--text2);
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    .pill.brand {
+      color: var(--accent);
+      background: var(--accent-subtle);
+      border-color: #d6d9fc;
+    }
+
+    .project-card h3 {
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+
+    .project-card p {
+      max-width: 520px;
+      margin: 14px 0 0;
+      color: var(--text2);
+      font-size: 15px;
+      line-height: 1.48;
+    }
+
+    .project-footer {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .project-link i { transition: transform 150ms var(--ease); }
+    .project-card:hover .project-link i { transform: translateX(3px); }
+
+    .project-stat {
+      color: var(--text1);
+      font: 500 13px/1.45 var(--font-code);
+      white-space: nowrap;
+    }
+
+    .visual {
+      position: relative;
+      z-index: 1;
+      margin-top: 24px;
+      min-height: 170px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(180deg, #f8fafd, #fff);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .flow-map {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 18px;
+    }
+
+    .flow-node {
+      min-height: 54px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: #fff;
+      padding: 10px;
+    }
+
+    .flow-node strong {
+      display: block;
+      color: var(--text1);
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    .flow-node span {
+      display: block;
+      margin-top: 5px;
+      color: var(--text3);
+      font: 500 10px/1.4 var(--font-code);
+    }
+
+    .flow-node.active {
+      border-color: #b9b9f9;
+      background: #f5f5ff;
+      box-shadow: inset 3px 0 0 var(--accent);
+    }
+
+    .phone-ui {
+      width: 150px;
+      height: 208px;
+      margin: 18px auto 0;
+      border-radius: 22px 22px 0 0;
+      border: 1px solid var(--border-visible);
+      border-bottom: 0;
+      background: #fff;
+      box-shadow: 0 13.5px 27px -12.4px rgba(50, 50, 93, .12), 0 8.1px 16.2px -8.1px rgba(0, 0, 0, .05);
+      padding: 16px 12px;
+    }
+
+    .phone-notch {
+      width: 44px;
+      height: 5px;
+      margin: 0 auto 16px;
+      border-radius: var(--radius-pill);
+      background: var(--surface3);
+    }
+
+    .ui-line {
+      height: 8px;
+      border-radius: var(--radius-pill);
+      background: var(--surface3);
+      margin-bottom: 8px;
+    }
+
+    .ui-line.dark { background: var(--text1); width: 66%; }
+    .ui-line.mid { width: 84%; }
+    .ui-line.short { width: 48%; }
+
+    .ui-button {
+      height: 34px;
+      margin-top: 18px;
+      border-radius: var(--radius-md);
+      background: var(--accent);
+    }
+
+    .journey {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 88px 1fr;
+    }
+
+    .journey-side {
+      padding: 14px;
+      border-right: 1px solid var(--border);
+      background: #fff;
+    }
+
+    .journey-side span {
+      display: block;
+      height: 8px;
+      margin-bottom: 12px;
+      border-radius: var(--radius-pill);
+      background: var(--surface3);
+    }
+
+    .journey-main {
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .journey-row {
+      display: grid;
+      grid-template-columns: 72px 1fr 44px;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .journey-row b {
+      color: var(--text1);
+      font: 500 11px/1.3 var(--font-code);
+    }
+
+    .journey-row span {
+      height: 7px;
+      border-radius: var(--radius-pill);
+      background: var(--surface3);
+    }
+
+    .journey-row em {
+      color: var(--accent);
+      font: normal 500 11px/1.3 var(--font-code);
+      text-align: right;
+    }
+
+    .research-board {
+      padding: 18px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .sticky {
+      min-height: 72px;
+      border-radius: var(--radius-sm);
+      padding: 10px;
+      background: #fff;
+      border: 1px solid var(--border);
+      box-shadow: 0 .683px 2.048px rgba(0, 0, 0, .06);
+    }
+
+    .sticky:nth-child(2) { background: #f5f5ff; }
+    .sticky:nth-child(3) { background: #fff5fa; }
+    .sticky:nth-child(6) { background: #fef9da; }
+
+    .sticky span {
+      display: block;
+      height: 7px;
+      margin-bottom: 7px;
+      border-radius: var(--radius-pill);
+      background: rgba(80, 97, 122, .20);
+    }
+
+    .system-map {
+      position: relative;
+      height: 100%;
+      padding: 20px;
+    }
+
+    .system-node {
+      position: absolute;
+      width: 112px;
+      min-height: 46px;
+      padding: 9px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: #fff;
+      color: var(--text1);
+      font-size: 12px;
+      font-weight: 500;
+      box-shadow: 0 3px 6px hsla(0, 0%, 9%, .06);
+    }
+
+    .system-node:nth-child(1) { top: 24px; left: 22px; }
+    .system-node:nth-child(2) { top: 44px; right: 28px; }
+    .system-node:nth-child(3) { bottom: 34px; left: 38%; border-color: #b9b9f9; background: #f5f5ff; }
+
+    .system-line {
+      position: absolute;
+      height: 2px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(90deg, var(--accent), var(--pink), var(--orange));
+      transform-origin: left center;
+    }
+
+    .system-line.a { width: 190px; left: 118px; top: 62px; transform: rotate(8deg); }
+    .system-line.b { width: 160px; left: 152px; top: 122px; transform: rotate(-20deg); }
+
+    .stats-band {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--border);
+    }
+
+    .stats-item {
+      padding: 24px;
+      background: #fff;
+    }
+
+    .stats-item strong {
+      display: block;
+      color: var(--text1);
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 300;
+      line-height: 1.03;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stats-item span {
+      display: block;
+      margin-top: 10px;
+      color: var(--text2);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .contact-section {
+      position: relative;
+      padding: 96px 24px;
+      color: #fff;
+      background:
+        radial-gradient(ellipse 80% 70% at 75% 20%, rgba(251, 118, 250, .48), transparent 62%),
+        radial-gradient(ellipse 65% 50% at 50% 5%, rgba(255, 97, 24, .42), transparent 58%),
+        linear-gradient(135deg, #061b31 0%, #0a2540 58%, #161741 100%);
+      overflow: hidden;
+    }
+
+    .contact-section::before {
+      content: "";
+      position: absolute;
+      inset: -30%;
+      background:
+        linear-gradient(120deg, transparent 28%, rgba(255, 255, 255, .08) 36%, transparent 44%),
+        linear-gradient(125deg, transparent 44%, rgba(255, 213, 82, .24) 52%, transparent 66%);
+      filter: blur(16px);
+      transform: rotate(-6deg);
+      pointer-events: none;
+    }
+
+    .contact-panel {
+      position: relative;
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 32px;
+      align-items: end;
+    }
+
+    .contact-panel h2 {
+      max-width: 760px;
+      color: #fff;
+      font-size: clamp(34px, 4.6vw, 58px);
+      line-height: 1.05;
+    }
+
+    .contact-panel p {
+      max-width: 620px;
+      margin: 18px 0 0;
+      color: #d4deef;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .footer {
+      padding: 36px 24px;
+      color: var(--text3);
+      background: #fff;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 920px) {
+      .nav-links { display: none; }
+      .hero {
+        min-height: auto;
+        padding-top: 128px;
+      }
+      .stripe-stage::after {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, .98) 0 48%, rgba(255, 255, 255, .70) 70%, rgba(255, 255, 255, .26) 100%),
+          linear-gradient(180deg, transparent 72%, #fff 100%);
+      }
+      .shape-grid-wrap {
+        top: 58%;
+        right: 50%;
+        width: min(1080px, 128vw);
+        height: min(1080px, 128vw);
+        transform: translate(50%, -50%);
+        opacity: .42;
+      }
+      .hero-grid,
+      .section-heading,
+      .contact-panel {
+        grid-template-columns: 1fr;
+      }
+      .hero-proof {
+        justify-content: flex-start;
+      }
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      .stats-band {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      .nav-wrap { top: 8px; padding: 0 12px; }
+      .nav { height: 56px; padding-left: 12px; }
+      .brand span { display: none; }
+      .nav-cta { min-height: 34px; padding: 7px 10px; }
+      .hero,
+      .section,
+      .contact-section {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      .hero-actions { flex-direction: column; align-items: flex-start; }
+      .metric-row,
+      .stats-band {
+        grid-template-columns: 1fr;
+      }
+      .project-card { padding: 18px; min-height: 0; }
+      .flow-map,
+      .research-board {
+        grid-template-columns: 1fr 1fr;
+      }
+      .journey { grid-template-columns: 1fr; }
+      .journey-side { display: none; }
+      .footer-inner { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 1ms !important;
+        transition-duration: 1ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="nav-wrap">
+      <nav class="nav" aria-label="Portfolio navigation" style="opacity: 0.9">
+        <a class="brand" href="#top" aria-label="Go to top">
+          <span class="mark" aria-hidden="true"></span>
+          <span>UI/UX Portfolio</span>
+        </a>
+        <div class="nav-links" aria-label="Sections">
+          <a href="#projects">Projects</a>
+          <a href="#metrics">Impact</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <a class="nav-cta" href="resume.pdf" download>Download Portfolio</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="stripe-stage" aria-hidden="true">
+          <div class="shape-grid-wrap">
+            <canvas class="shape-grid-canvas" id="shape-grid-canvas"></canvas>
+          </div>
+        </div>
+        <div class="container hero-grid">
+          <div>
+            <div class="eyebrow">你好，我是魏雪！</div>
+            <h1 id="hero-title" style="font-size: 50px; line-height: 1.5">把复杂业务转化为清晰、可验证的产品体验</h1>
+            <p class="hero-copy">
+              我是一名 UX 设计师，专注于 B2B 平台、数据密集型工具和跨角色工作流。我的方法从研究证据出发，将用户旅程、信息架构、交互原型和设计系统连接成可上线、可度量的体验基础设施。
+            </p>
+            <div class="hero-actions" aria-label="Primary actions">
+              <a class="btn btn-primary" href="resume.pdf" download>
+                下载简历
+                <i class="ti ti-arrow-right" aria-hidden="true"></i>
+              </a>
+              <a class="btn btn-secondary" href="#projects">
+                查看精选项目
+                <i class="ti ti-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-proof" aria-label="Portfolio proof dashboard">
+            <div class="browser">
+              <div class="browser-top">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="browser-url">portfolio.ops/ux-impact</span>
+              </div>
+              <div class="browser-body">
+                <div class="dash-head">
+                  <div class="dash-title">UX delivery health</div>
+                  <div class="status">Live portfolio</div>
+                </div>
+                <div class="metric-row">
+                  <div class="metric">
+                    <strong>5</strong>
+                    <span>case studies</span>
+                  </div>
+                  <div class="metric">
+                    <strong>42%</strong>
+                    <span>task time cut</span>
+                  </div>
+                  <div class="metric">
+                    <strong>18</strong>
+                    <span>research cycles</span>
+                  </div>
+                </div>
+                <div class="chart" aria-hidden="true">
+                  <div class="bars">
+                    <span class="bar" style="height: 34%"></span>
+                    <span class="bar" style="height: 46%"></span>
+                    <span class="bar" style="height: 42%"></span>
+                    <span class="bar" style="height: 58%"></span>
+                    <span class="bar" style="height: 72%"></span>
+                    <span class="bar" style="height: 66%"></span>
+                    <span class="bar" style="height: 86%"></span>
+                    <span class="bar" style="height: 78%"></span>
+                    <span class="bar" style="height: 92%"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="projects" aria-labelledby="projects-title">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <div class="section-kicker"><i class="ti ti-sparkles" aria-hidden="true"></i> Selected UX work</div>
+              <h2 id="projects-title" style="font-family: &quot;PingFang SC&quot;">主导 UI/UX 项目精选</h2>
+            </div>
+            <p style="font-family: &quot;PingFang SC&quot;">5 年 B 端设计、3 年 C 端设计，主导 20+ 项目 0-1 全链路设计</p>
+          </div>
+
+          <div class="projects-grid">
+            <article class="project-card">
+              <div class="project-content">
+                <div class="project-meta">
+                  <span class="pill brand" style="font-weight: 400">B2B SaaS</span>
+                  <span class="pill" style="border-color: rgb(209, 216, 224); background-color: rgb(255, 255, 255); font-weight: 400">B 端平台设计</span>
+                  <span class="pill" style="background-color: rgb(255, 255, 255); font-weight: 400">设计冲刺</span>
+                </div>
+                <h3 style="font-family: &quot;PingFang SC&quot;; line-height: 1.3">字节跳动工单平台
+0-1 设计全记录</h3>
+                <p style="line-height: 1.5">面向字节跳动 12 万员工的事务流转中台，
+累计承载 1300 万+ 工单</p>
+              </div>
+              <div class="visual" aria-hidden="true" style="padding:0;overflow:hidden;border-radius:var(--radius-md);background:transparent;">
+                <img src="pasted-1782255877532-0.png" alt="字节跳动工单平台插图" style="width: 282px; height: 228px; object-fit: cover; display: block; opacity: 1">
+              </div>
+              <div class="project-footer">
+                <a class="project-link" href="#contact">查看项目细节</a>
+                <span class="project-stat">UX/UI全平台设计</span>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div class="project-content">
+                <div class="project-meta">
+                  <span class="pill brand" style="font-weight: 400">Mobile UX</span>
+                  <span class="pill" style="background-color: rgb(255, 255, 255)">Prototype</span>
+                </div>
+                <h3 style="font-family: &quot;PingFang SC&quot;">订阅支付 App 新手引导</h3>
+                <p>
+                  为首次开通订阅的用户设计渐进式引导，降低付款前不确定性，并把价格、权益和取消规则前置到关键决策点。
+                </p>
+              </div>
+              <div class="visual" aria-hidden="true">
+                <div class="phone-ui">
+                  <div class="phone-notch"></div>
+                  <div class="ui-line dark"></div>
+                  <div class="ui-line mid"></div>
+                  <div class="ui-line short"></div>
+                  <div class="ui-line mid"></div>
+                  <div class="ui-button"></div>
+                </div>
+              </div>
+              <div class="project-footer">
+                <a class="project-link" href="#contact">查看流程 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+                <span class="project-stat">+19% activation</span>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div class="project-content">
+                <div class="project-meta">
+                  <span class="pill brand">Data product</span>
+                  <span class="pill">Dashboard</span>
+                  <span class="pill" style="font-weight: 400">FinOps</span>
+                </div>
+                <h3 style="font-family: &quot;PingFang SC&quot;">成本监控 Dashboard 信息架构</h3>
+                <p>
+                  重新定义指标层级、异常解释和团队归因方式，让运营、财务和产品负责人可以在同一个界面上定位成本波动来源。
+                </p>
+              </div>
+              <div class="visual journey" aria-hidden="true">
+                <div class="journey-side">
+                  <span style="width: 88%"></span>
+                  <span style="width: 62%"></span>
+                  <span style="width: 74%"></span>
+                  <span style="width: 52%"></span>
+                </div>
+                <div class="journey-main">
+                  <div class="journey-row"><b>API</b><span></span><em>+8.4%</em></div>
+                  <div class="journey-row"><b>Storage</b><span></span><em>-2.1%</em></div>
+                  <div class="journey-row"><b>Model</b><span></span><em>+14%</em></div>
+                  <div class="journey-row"><b>Alerts</b><span></span><em>3 open</em></div>
+                </div>
+              </div>
+              <div class="project-footer">
+                <a class="project-link" href="#contact">查看信息架构 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+                <span class="project-stat">8 teams aligned</span>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div class="project-content">
+                <div class="project-meta">
+                  <span class="pill brand" style="font-weight: 400">Research Ops</span>
+                  <span class="pill" style="font-weight: 400">Interview synthesis</span>
+                </div>
+                <h3>用户研究知识库与洞察流程</h3>
+                <p>
+                  建立从访谈记录、标签体系、洞察归档到路线图输入的研究系统，让团队能追踪每个产品决策背后的证据链。
+                </p>
+              </div>
+              <div class="visual research-board" aria-hidden="true">
+                <div class="sticky"><span style="width: 80%"></span><span style="width: 54%"></span><span style="width: 70%"></span></div>
+                <div class="sticky"><span style="width: 66%"></span><span style="width: 82%"></span></div>
+                <div class="sticky"><span style="width: 72%"></span><span style="width: 42%"></span><span style="width: 60%"></span></div>
+                <div class="sticky"><span style="width: 90%"></span><span style="width: 64%"></span></div>
+                <div class="sticky"><span style="width: 52%"></span><span style="width: 78%"></span></div>
+                <div class="sticky"><span style="width: 82%"></span><span style="width: 46%"></span></div>
+                <div class="sticky"><span style="width: 64%"></span><span style="width: 86%"></span></div>
+                <div class="sticky"><span style="width: 74%"></span><span style="width: 50%"></span></div>
+              </div>
+              <div class="project-footer">
+                <a class="project-link" href="#contact">查看研究系统 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+                <span class="project-stat">126 insights tagged</span>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div class="project-content">
+                <div class="project-meta">
+                  <span class="pill brand">Design system</span>
+                  <span class="pill" style="font-weight: 400">Components</span>
+                  <span class="pill" style="font-weight: 400">Governance</span>
+                </div>
+                <h3>跨产品设计系统治理</h3>
+                <p>
+                  将按钮、表单、状态提示、数据表格和导航规范统一为可维护的组件规则，并定义设计评审、token 更新和可访问性检查机制。
+                </p>
+              </div>
+              <div class="visual system-map" aria-hidden="true">
+                <span class="system-line a"></span>
+                <span class="system-line b"></span>
+                <div class="system-node">Tokens<br><span class="project-stat">64 roles</span></div>
+                <div class="system-node">Components<br><span class="project-stat">28 patterns</span></div>
+                <div class="system-node">Release<br><span class="project-stat">v2.4</span></div>
+              </div>
+              <div class="project-footer">
+                <a class="project-link" href="#contact">查看组件规范 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+                <span class="project-stat">-31% design debt</span>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div class="project-content">
+                <div class="project-meta">
+                  <span class="pill brand" style="font-weight: 400">Accessibility</span>
+                  <span class="pill" style="font-weight: 400">Audit</span>
+                  <span class="pill" style="font-weight: 400">WCAG 2.1</span>
+                </div>
+                <h3>无障碍体验全链路审查</h3>
+                <p>
+                  对三条核心业务流程进行 WCAG 2.1 AA 级合规审查，识别键盘导航断点、颜色对比缺口和屏幕阅读器兼容问题，输出优先级修复路线图。
+                </p>
+              </div>
+              <div class="visual" aria-hidden="true" style="display:flex;flex-direction:column;gap:8px;padding:18px;">
+                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:var(--success);flex:0 0 auto;"></span>
+                  <span style="flex:1;height:7px;border-radius:99px;background:var(--surface3);"></span>
+                  <span style="font:500 11px/1 var(--font-code);color:var(--success);">AA</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:var(--error);flex:0 0 auto;"></span>
+                  <span style="flex:1;height:7px;border-radius:99px;background:var(--surface3);"></span>
+                  <span style="font:500 11px/1 var(--font-code);color:var(--error);">Fail</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:var(--warning);flex:0 0 auto;"></span>
+                  <span style="flex:1;height:7px;border-radius:99px;background:var(--surface3);"></span>
+                  <span style="font:500 11px/1 var(--font-code);color:var(--warning);">Warn</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:var(--success);flex:0 0 auto;"></span>
+                  <span style="flex:1;height:7px;border-radius:99px;background:var(--surface3);"></span>
+                  <span style="font:500 11px/1 var(--font-code);color:var(--success);">AA</span>
+                </div>
+              </div>
+              <div class="project-footer">
+                <a class="project-link" href="#contact">查看审查报告 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+                <span class="project-stat">47 issues fixed</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt" id="metrics" aria-labelledby="metrics-title">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <div class="section-kicker"><i class="ti ti-chart-bar" aria-hidden="true"></i> Impact ledger</div>
+              <h2 id="metrics-title">用可量化结果证明体验决策。</h2>
+            </div>
+            <p>
+              每个项目都以用户行为、业务指标和交付效率作为判断标准。研究不是报告终点，而是产品系统持续运转的输入。
+            </p>
+          </div>
+          <div class="stats-band">
+            <div class="stats-item">
+              <strong>18</strong>
+              <span>轮用户研究与可用性测试</span>
+            </div>
+            <div class="stats-item">
+              <strong>5</strong>
+              <span>端到端 UX 项目板块</span>
+            </div>
+            <div class="stats-item">
+              <strong>42%</strong>
+              <span>核心任务平均耗时下降</span>
+            </div>
+            <div class="stats-item">
+              <strong>28</strong>
+              <span>可复用组件与交互模式</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact-section" id="contact" aria-labelledby="contact-title">
+        <div class="contact-panel">
+          <div>
+            <div class="section-kicker" style="color:#d6d9fc"><i class="ti ti-send" aria-hidden="true"></i> Available for UX roles</div>
+            <h2 id="contact-title" style="height: 106px">需要一个能把复杂系统讲清楚、做出来、验证掉的 UX 设计师？</h2>
+            <p>
+              我可以参与从发现问题、定义旅程、搭建原型到设计系统落地的完整流程。欢迎约一次作品集 walkthrough。
+            </p>
+          </div>
+          <a class="btn btn-primary" href="/cdn-cgi/l/email-protection#a6cec3cacac9e6c3dec7cbd6cac388c5c9cb">
+            联系我
+            <i class="ti ti-arrow-right" aria-hidden="true"></i>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span>UX Systems Portfolio</span>
+        <span>Research · Interaction Design · Design Systems · Prototyping</span>
+      </div>
+    </footer>
+  </div>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    const shapeCanvas = document.getElementById("shape-grid-canvas");
+    const shapeWrap = document.querySelector(".shape-grid-wrap");
+    const shapeCtx = shapeCanvas.getContext("2d");
+    const shapeConfig = {
+      speed: 0.5,
+      squareSize: 40,
+      direction: "diagonal",
+      borderColor: "#413b4b",
+      hoverFillColor: "#3B82F6",
+      shape: "square",
+      hoverTrailAmount: 0
+    };
+
+    let shapeDpr = 1;
+    let shapeWidth = 0;
+    let shapeHeight = 0;
+    let pointer = { x: -1, y: -1, inside: false };
+
+    function resizeShapeGrid() {
+      const rect = shapeWrap.getBoundingClientRect();
+      shapeDpr = Math.min(window.devicePixelRatio || 1, 2);
+      shapeWidth = rect.width;
+      shapeHeight = rect.height;
+      shapeCanvas.width = Math.max(1, Math.floor(shapeWidth * shapeDpr));
+      shapeCanvas.height = Math.max(1, Math.floor(shapeHeight * shapeDpr));
+      shapeCanvas.style.width = `${shapeWidth}px`;
+      shapeCanvas.style.height = `${shapeHeight}px`;
+      shapeCtx.setTransform(shapeDpr, 0, 0, shapeDpr, 0, 0);
+    }
+
+    function updatePointer(event) {
+      const rect = shapeCanvas.getBoundingClientRect();
+      pointer.x = event.clientX - rect.left;
+      pointer.y = event.clientY - rect.top;
+      pointer.inside = pointer.x >= 0 && pointer.x <= rect.width && pointer.y >= 0 && pointer.y <= rect.height;
+    }
+
+    function clearPointer() {
+      pointer.inside = false;
+    }
+
+    function drawShapeGrid(time = 0) {
+      const size = shapeConfig.squareSize;
+      const drift = (time * 0.03 * shapeConfig.speed) % size;
+      const offsetX = shapeConfig.direction === "diagonal" ? drift : 0;
+      const offsetY = shapeConfig.direction === "diagonal" ? drift : 0;
+      const activeCol = pointer.inside ? Math.floor((pointer.x + offsetX) / size) : -999;
+      const activeRow = pointer.inside ? Math.floor((pointer.y + offsetY) / size) : -999;
+
+      shapeCtx.clearRect(0, 0, shapeWidth, shapeHeight);
+      shapeCtx.lineWidth = 1;
+      shapeCtx.strokeStyle = shapeConfig.borderColor;
+      shapeCtx.globalAlpha = 0.24;
+
+      const startX = -size - offsetX;
+      const startY = -size - offsetY;
+      const cols = Math.ceil(shapeWidth / size) + 3;
+      const rows = Math.ceil(shapeHeight / size) + 3;
+
+      for (let row = 0; row < rows; row += 1) {
+        for (let col = 0; col < cols; col += 1) {
+          const x = startX + col * size;
+          const y = startY + row * size;
+          const logicalCol = Math.floor((x + offsetX) / size);
+          const logicalRow = Math.floor((y + offsetY) / size);
+
+          if (logicalCol === activeCol && logicalRow === activeRow) {
+            shapeCtx.globalAlpha = 0.88;
+            shapeCtx.fillStyle = shapeConfig.hoverFillColor;
+            shapeCtx.fillRect(x - 0.5, y - 0.5, size + 1, size + 1);
+            shapeCtx.globalAlpha = 0.34;
+          }
+
+          shapeCtx.strokeRect(x + 0.5, y + 0.5, size, size);
+        }
+      }
+
+      shapeCtx.globalAlpha = 1;
+      requestAnimationFrame(drawShapeGrid);
+    }
+
+    resizeShapeGrid();
+    drawShapeGrid();
+    window.addEventListener("resize", resizeShapeGrid, { passive: true });
+    window.addEventListener("pointermove", updatePointer, { passive: true });
+    window.addEventListener("pointerleave", clearPointer, { passive: true });
+  </script>
+  <script>
+    const navEl = document.querySelector('.nav');
+    function updateNav() {
+      if (window.scrollY > 10) {
+        navEl.style.boxShadow = '0 30px 60px -50px rgba(0,0,0,.10), 0 30px 60px -10px rgba(50,50,93,.25)';
+        navEl.style.background = 'rgba(255,255,255,0.82)';
+        navEl.style.backdropFilter = 'blur(16px)';
+        navEl.style.webkitBackdropFilter = 'blur(16px)';
+      } else {
+        navEl.style.boxShadow = '';
+        navEl.style.background = '';
+        navEl.style.backdropFilter = '';
+        navEl.style.webkitBackdropFilter = '';
+      }
+    }
+    window.addEventListener('scroll', updateNav, { passive: true });
+    updateNav();
+  </script>
+</body>
+</html>
+
+<style id="__om-edit-overrides">
+#projects div :is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,figcaption,label,span,a,em,strong,small,td,th,caption) >span:last-child { line-height: 1.2 !important }
+#projects div :is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,figcaption,label,span,a,em,strong,small,td,th,caption) >span:last-child { line-height: 1.4 !important }
+#projects :is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,figcaption,label,span,a,em,strong,small,td,th,caption) >:is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,figcaption,label,span,a,em,strong,small,td,th,caption) { text-align: right !important }
+</style>
