@@ -1379,7 +1379,7 @@
           if (logicalCol === activeCol && logicalRow === activeRow) {
             shapeCtx.globalAlpha = 0.88;
             shapeCtx.fillStyle = shapeConfig.hoverFillColor;
-            shapeCtx.fillRect(x + 1, y + 1, size - 2, size - 2);
+            shapeCtx.fillRect(x - 0.5, y - 0.5, size + 1, size + 1);
             shapeCtx.globalAlpha = 0.34;
           }
 
